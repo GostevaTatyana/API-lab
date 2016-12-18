@@ -1,0 +1,53 @@
+<!--
+Goal of this extension: Demonstrate how to create a wizard for Design Modeler.
+This wizard simply creates a geometry.
+
+Main contents:
+    1. One XML file with one ACT wizard for Design Modeler
+    2. One Python file defining the actions
+
+Documentation References:
+    1. ANSYS Documentation > Customization Suite > ACT Developer's Guide > Guided Processes
+  
+Usage instructions:
+    1. Copy this XML and the folder (DMWizard) to %appdata%\Ansys\v170\ACT\extensions.
+    2. Load the extension: 
+      a. Click on ACT Start Page
+      b. Click on Extension Manager
+      c. Click on DMWizard
+    3. Open Design Modeler and click on Open Wizard in the toolbar
+    4. Select CreateBridge
+    5. Follow the steps
+-->
+<extension version="1" name="lab" >
+	<guid>40d71470-7205-497a-826c-7c6798700292</guid>
+
+
+	<script src="dm1.py" />
+
+	<interface context="DesignModeler">
+		<images>images</images>
+		<toolbar name="BOX_Extension" caption="Trapeze">
+			<entry name="BOX"  icon="box">
+			<callbacks>
+				<onclick>createMyFeature</onclick>
+			</callbacks>
+			</entry>
+		</toolbar>
+	</interface>
+
+	<!-- ACT Custom Object -->
+	<simdata context="DesignModeler">
+		<geometry name="MyFeature" caption="Box" icon="box" version="1">
+			<callbacks>
+				<ongenerate>generateBoxGeometry</ongenerate>
+			</callbacks>
+			<property name="Top" caption="Top" unit="Length" control="float" default="10 [m]" ></property>
+			<property name="Height" caption="Height" unit="Length" control="float" default="8 [m]" ></property> 
+			<property name="Bottom" caption="Bottom" unit="Length" control="float" default="16[m]" ></property>	
+			<property name="Shift" caption="Shift" unit="Length" control="float" default="3 [m]" ></property>
+			<property name="Width" caption="Width" unit="Length" control="float" default="10 [m]" ></property>
+		</geometry>
+	</simdata>
+
+</extension>
