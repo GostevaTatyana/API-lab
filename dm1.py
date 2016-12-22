@@ -35,12 +35,9 @@ def generateBoxGeometry(feature,fct):
 	box1 = box.Generate()
 	bodies1.Add(extrude.ApplyTo(box1)[0])
 	
-	#Subtract1 = builder.Operations.CreateSubtractOperation([polygon1],[box1])
-	#bodies.Add(Subtract1.ApplyTo(polygon1))
 	Subtract = builder.Operations.CreateSubtractOperation(bodies1)
 	bodies2 = Subtract.ApplyTo(bodies)
 	feature.Bodies = bodies2
 	feature.MaterialType = MaterialTypeEnum.Freeze
-
 	
 	return True
