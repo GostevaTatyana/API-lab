@@ -21,6 +21,8 @@ def generateBoxGeometry(feature,fct):
 	ExtAPI.Log.WriteMessage(Bottom.ToString())
 	
 	bodies=[]
+	bodies1=[]
+	bodies2=[]
 	builder = ExtAPI.DataModel.GeometryBuilder
 	
 	ExtAPI.Log.WriteMessage("Primitives.Sheet.CreatePolygon")
@@ -31,12 +33,14 @@ def generateBoxGeometry(feature,fct):
 
 	box = builder.Primitives.Sheet.CreatePolygon([1.,1.,0.,2.,1.,0.,2.,2.,0.,1.,2.,0.])	
 	box1 = box.Generate()
-	bodies.Add(extrude.ApplyTo(box1)[0])
+	bodies1.Add(extrude.ApplyTo(box1)[0])
 	
-	Subtract1 = builder.Operations.CreateSubtractOperation([polygon1],[box1])
-	bodies.Add(Subtract1.ApplyTo(polygon1))
-
-	feature.Bodies = bodies
+	#Subtract1 = builder.Operations.CreateSubtractOperation([polygon1],[box1])
+	#bodies.Add(Subtract1.ApplyTo(polygon1))
+	Subtract = builder.Operations.CreateSubtractOperation(bodies1)
+	bodies2 = Subtract.ApplyTo(bodies)
+	feature.Bodies = bodies2
 	feature.MaterialType = MaterialTypeEnum.Freeze
+
 	
 	return True
